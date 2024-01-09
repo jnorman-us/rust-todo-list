@@ -19,7 +19,7 @@ struct ToDo {
 
 impl fmt::Display for ToDo {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "[ ] {}", self.description)
+        write!(f, "{}", self.description)
     }
 }
 
@@ -88,8 +88,8 @@ fn main() {
             },
             Command::Show => {
                 println!("Todo List:");
-                for item in todo_list.iter() {
-                    println!("{}", item);
+                for (index, item) in todo_list.iter().enumerate() {
+                    println!("{}> {}", index, item);
                 }
             }
             Command::Help => {
