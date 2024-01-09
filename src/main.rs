@@ -70,7 +70,6 @@ fn main() {
         println!("Enter Command > ");
 
         let command = parse_command();
-
         match command {
             Command::Add(item) => todo_list.push(item),
             Command::Remove(index) => {
