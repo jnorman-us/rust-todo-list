@@ -1,26 +1,13 @@
-use std::{
-    fmt,
-    io
-};
+use std::{io, os};
 
 #[derive(Debug)]
 enum Command {
-    Add(ToDo),
+    Add(String),
     Remove(usize),
     Show,
     Help,
+    Quit,
     None,
-}
-
-#[derive(Debug)]
-struct ToDo {
-    description: String,
-}
-
-impl fmt::Display for ToDo {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.description)
-    }
 }
 
 static HELP_TEXT: &str = r#"+---------------------------+
@@ -33,6 +20,8 @@ List of commands and syntax:
         (prints contents of list)
     help
         (prints this list of commands and syntax)
+    quit
+        (exits the program)
 +---------------------------+"#;
 
 fn parse_command() -> Command {
@@ -56,7 +45,8 @@ fn parse_command() -> Command {
     match command {
         "help" => return Command::Help,
         "show" => return Command::Show,
-        "add" => return Command::Add(ToDo{description: args}),
+        "quit" => return Command::Quit,
+        "add" => return Command::Add(args),
         "remove" => match args.parse::<usize>() {
             Ok(index) => Command::Remove(index),
             Err(_) => {
@@ -72,7 +62,7 @@ fn parse_command() -> Command {
 }
 
 fn main() {
-    let mut todo_list: Vec<ToDo> = Vec::new();
+    let mut todo_list: Vec<String> = Vec::new();
 
     println!("Welcome to the Todo List! Type \"help\" to get started...");
     
@@ -96,6 +86,7 @@ fn main() {
                 println!("{}", HELP_TEXT);
             }
             Command::None => println!("Not a valid command!"),
+            Command::Quit => return,
         }
     }
 }
