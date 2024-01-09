@@ -1,4 +1,4 @@
-use std::{io, os};
+use std::io;
 
 #[derive(Debug)]
 enum Command {
