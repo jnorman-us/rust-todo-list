@@ -73,6 +73,10 @@ fn main() {
         match command {
             Command::Add(item) => todo_list.push(item),
             Command::Remove(index) => {
+                if index >= todo_list.len() {
+                    println!("Removal index out of bounds!");
+                    continue;
+                }
                 todo_list.remove(index);
             },
             Command::Show => {
